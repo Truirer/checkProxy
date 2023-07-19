@@ -31,7 +31,8 @@ protocols = protocols you want to check in array format . Example= ["http","http
 timeoutForRequest = Request timeout duration in seconds.
 maxRequests = Additional requests to test the same proxy address. Set 0 if you want to check every proxy only once.
 
-``` 
+```
+*After setting up the correct parameters the function should start printing the ip adresses to txt files. File names are created as protocol_name_ValidProxies.txt.
 
 
 ## License
