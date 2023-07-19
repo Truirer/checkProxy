@@ -1,4 +1,4 @@
-from getProxy import startProxyCheck
+from checkProxy import startProxyCheck
 
 allProxies = [
     

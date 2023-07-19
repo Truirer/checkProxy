@@ -26,17 +26,20 @@ def startProxyCheck(allProxies,protocols,timeoutForRequest,maxRequests):
     print("Your public ip is: " + str(publicIp))
 
 
-    def getProxy(proxy,protocolArray,timeoutForRequest,maximumRequests):
+    def checkProxy(proxy,protocolArray,timeoutForRequest,maximumRequests):
         global count
         global publicIp
         global headers
         for protocol in protocolArray:
+            #loop for all protocols given
             print("Testing " + str(protocol) + " protocol!")
             proxies = {
                 str(protocol) : str(proxy),
             }
             time.sleep(1)
             try:
+                #try to get a response from a website.
+                #any website can be used but API's which return your ip address are preferred
                 response = requests.post(str(protocol) + '://api.whatismyip.com/wimi.php', headers=headers, proxies=proxies , timeout=timeoutForRequest)
                 if(response.status_code == 200):
                     data = response.text
@@ -46,13 +49,13 @@ def startProxyCheck(allProxies,protocols,timeoutForRequest,maxRequests):
                         with open(str(protocol)+"_ValidProxies.txt", "a", encoding="utf-8") as f:
                             f.write(str(proxy) + ",")
                     else:
-                        print("Proxy is not working.")
-                        # getProxy(proxy,timeoutForRequest,maximumRequests)
+                        print("Proxy is not masking ip.")
             except:
+                #request again using the same proxy.
                 if(count < maximumRequests):
                     print("Trying to request again. Requests left: " + str(maximumRequests - count -1))
                     count = count + 1
-                    getProxy(protocol,[str(protocol)],timeoutForRequest,maximumRequests)
+                    checkProxy(protocol,[str(protocol)],timeoutForRequest,maximumRequests)
                 else:
                     count = 0
                     print("Failed to connect to proxy server")
@@ -60,4 +63,4 @@ def startProxyCheck(allProxies,protocols,timeoutForRequest,maxRequests):
     for index,proxy in enumerate(allProxies):
         print("Testing Proxy: " +str(proxy))
         print("Proxies left: " + str(len(allProxies) - index))
-        getProxy(proxy,protocols,timeoutForRequest,maxRequests)
+        checkProxy(proxy,protocols,timeoutForRequest,maxRequests)
