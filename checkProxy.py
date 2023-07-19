@@ -2,22 +2,22 @@ import requests
 import time
 
 count = 0
-headers = {
-    'authority': 'api.whatismyip.com',
-    'accept': '*/*',
-    'accept-language': 'en,en-US;q=0.9,tr-TR;q=0.8,tr;q=0.7',
-    'cache-control': 'no-cache',
-    # 'content-length': '0',
-    'origin': 'https://www.whatismyip.com',
-    'pragma': 'no-cache',
-    'referer': 'https://www.whatismyip.com/',
-    'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
-}
+
 def startProxyCheck(allProxies,protocols,timeoutForRequest,maxRequests):
-    global headers
     def checkProxy(proxy,protocolArray,timeoutForRequest,maximumRequests):
         global count
-        global headers
+        headers = {
+            'authority': 'api.whatismyip.com',
+            'accept': '*/*',
+            'accept-language': 'en,en-US;q=0.9,tr-TR;q=0.8,tr;q=0.7',
+            'cache-control': 'no-cache',
+            # 'content-length': '0',
+            'origin': 'https://www.whatismyip.com',
+            'pragma': 'no-cache',
+            'referer': 'https://www.whatismyip.com/',
+            'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
+        }
+        
         for protocol in protocolArray:
             #loop for all protocols given
             print("Testing " + str(protocol) + " protocol!")
